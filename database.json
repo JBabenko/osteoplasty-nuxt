@@ -1,0 +1,138 @@
+{
+  "products": [
+    {
+      "brand": "Botiss",
+      "currency": "eu",
+      "items": [
+        {
+          "name": "Cerabone",
+          "type": "bone",
+          "unit": "g",
+          "previewImage": "botiss/cerabone.jpg",
+          "images": [],
+          "params": [
+            {
+              "volume": "0.5",
+              "sizes": ["0.25 - 1.0", "1.0 - 2.0"],
+              "price": "46"
+            },
+            {
+              "volume": "1.0",
+              "sizes": ["1.0 - 2.0"],
+              "price": "92"
+            },
+            {
+              "volume": "2.0",
+              "sizes": ["0.25 - 1.0", "2.0 - 4.0"],
+              "price": "165"
+            }
+          ]
+        },
+        {
+          "name": "Maxresorb Inject",
+          "type": "bone",
+          "unit": "cc",
+          "previewImage": "botiss/maxresorbinject.jpg",
+          "images": [],
+          "params": [
+            {
+              "volume": "0.5",
+              "price": "64"
+            },
+            {
+              "volume": "2.0",
+              "price": "148"
+            }
+          ]
+        },
+        {
+          "name": "Collacone (12 шт)",
+          "type": "block",
+          "unit": "mm",
+          "previewImage": "botiss/callacone.jpg",
+          "images": [],
+          "params": [
+            {
+              "volume": "8",
+              "price": "102"
+            }
+          ]
+        },
+        {
+          "name": "Mucoderm",
+          "type": "membrane",
+          "unit": "mm",
+          "previewImage": "botiss/mucoderm.jpg",
+          "images": [],
+          "params": [
+            {
+              "volume": "15x20",
+              "sizes": ["стандартная", "тонкая"],
+              "price": "86"
+            },
+            {
+              "volume": "20x30",
+              "price": "144"
+            },
+            {
+              "volume": "30x40",
+              "sizes": ["тонкая"],
+              "price": "189"
+            }
+          ]
+        },
+        {
+          "name": "Jason",
+          "type": "membrane",
+          "unit": "mm",
+          "previewImage": "botiss/jasonmembrane.jpg",
+          "images": [],
+          "params": [
+            {
+              "volume": "15x20",
+              "price": "76"
+            },
+            {
+              "volume": "20x30",
+              "price": "102"
+            },
+            {
+              "volume": "30x40",
+              "price": "126"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": "Geistlich",
+      "currency": "chf",
+      "items": [
+        {
+          "name": "Bio-Oss",
+          "type": "bone",
+          "unit": "g",
+          "previewImage": "botiss/cerabone.jpg",
+          "images": [],
+          "params": [
+            {
+              "volume": "0.5",
+              "sizes": ["0.25 - 1.0", "1.0 - 2.0"],
+              "price": "46"
+            },
+            {
+              "volume": "1.0",
+              "sizes": ["1.0 - 2.0"],
+              "price": "92"
+            },
+            {
+              "volume": "2.0",
+              "sizes": ["0.25 - 1.0", "2.0 - 4.0"],
+              "price": "165"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
