@@ -96,7 +96,7 @@
         if (this.itemSizes) {
           this.selectedSize = this.itemSizes[0];
         }
-      }
+      },
     },
     computed: {
       itemPrice() {

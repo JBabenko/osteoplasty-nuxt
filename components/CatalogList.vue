@@ -9,7 +9,7 @@
   <font-awesome-icon
     class="icon catalog__scroll-arrow catalog__scroll-arrow-left"
     icon="chevron-left"
-    @click="onScrollPrev()"
+    @click="onScrollPrev($refs.list, $refs.items)"
   />
   <font-awesome-icon
     class="icon catalog__scroll-arrow catalog__scroll-arrow-right"
@@ -21,11 +21,13 @@
 
 <script>
   import AppItemParams from './ItemParams.vue'
+import { setTimeout } from 'timers';
   export default {
     props: ['brand'],
     data() {
       return {
-        items: this.brand.items
+        items: this.brand.items,
+        screenWidth: null
       }
     },
     components: {
@@ -33,37 +35,73 @@
     },
     methods: {
       onScrollNext(list, items) {
-        const listWidth = list.scrollWidth;
-        const itemWidth = listWidth / (items.length + 2);
-        console.log(itemWidth);
+        const shift = this.getCarouselShift(list);
+        this.changeCarouselShift(list, shift);
+        setTimeout(() => {
+          list.insertBefore(list.firstChild, null);
+          list.style.transition = 'none';
+          this.changeCarouselShift(list, 0);
+        }, 250);
+        list.style.transition = 'left 0.25s';
+
+      },
+      onScrollPrev(list, items) {
+        const shift = this.getCarouselShift(list);
+        this.changeCarouselShift(list, shift*-1);
+        setTimeout(() => {
+          list.insertBefore(list.lastChild, list.firstChild);
+          list.style.transition = 'none';
+          this.changeCarouselShift(list, 0);
+        }, 250);
+        list.style.transition = 'left 0.25s';
+
       },
       prepareCarousel(list, items) {
-        const firstEl = items[0].cloneNode(true);
-        const lastEl = items[items.length-1].cloneNode(true);
-        list.appendChild(firstEl);
-        list.insertBefore(lastEl, items[0]);
-      }
+        const lastEl = list.removeChild(items[items.length-1]);
+        list.insertBefore(lastEl, list.children[0]);
+      },
+      changeCarouselShift(list, shift) {
+        const newShift = shift*-1 + this.screenWidth;
+        list.style.left = `${newShift * -1 + 50}px`;
+      },
+      getCarouselShift(list) {
+        return +list.style.left.split('px')[0];
+      },
+      onResize() {
+        this.screenWidth = window.innerWidth;
+        this.changeCarouselShift(this.$refs.list, 0);
+      },
     },
     computed: {
       listWidth() {
         return document.querySelector('.catalog__list').offsetWidth;
-      },
+      }
     },
     mounted() {
+      window.addEventListener('resize', this.onResize);
+      this.screenWidth = window.innerWidth;
+
       this.prepareCarousel(this.$refs.list, this.$refs.items);
-      /* const itemWidth = document.querySelector('.catalog__item').offsetWidth;
-      const list = document.querySelector('.catalog__list');
-      list.style.transform = `translateX(-${itemWidth}px)`; */
+      for (let i = 0; i < this.$refs.items.length; i++) {
+        this.$refs.items[i].dataset.id = this.$refs.items.indexOf(this.$refs.items[i]);
+      }
+      this.changeCarouselShift(this.$refs.list, 0);
+
     }
   }
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/styles/main.scss';
+  .no-transition {
+    transition: none;
+  }
   .catalog {
     &__list {
       display: flex;
-      padding: 0;
+      position: relative;
+      padding: 0 25px;
+      transition: left 0.25s;
     }
 
     &__item {
