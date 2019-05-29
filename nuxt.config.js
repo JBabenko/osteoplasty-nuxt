@@ -37,6 +37,7 @@ module.exports = {
   */
   plugins: [
     '@/plugins/firebase.js',
+    {src: '~plugins/touch', ssr: false}
   ],
 
   /*

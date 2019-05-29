@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-touch:swipe.left="onScrollNext">
   <ul ref="list" class="catalog__list">
     <li ref="items" class="catalog__item" v-for="item in items" :key="item.name">
       <app-item-params :item="item" :brand="brand.brand" :currency="brand.currency"></app-item-params>
@@ -14,7 +14,7 @@
   <font-awesome-icon
     class="icon catalog__scroll-arrow catalog__scroll-arrow-right"
     icon="chevron-right"
-    @click="onScrollNext($refs.list, $refs.items)"
+    @click="onScrollNext()"
   />
 </div>
 </template>
@@ -34,26 +34,31 @@ import { setTimeout } from 'timers';
       AppItemParams,
     },
     methods: {
-      onScrollNext(list, items) {
+      onTap() {
+        console.log('tap')
+      },
+      onScrollNext() {
+        const list = this.$refs.list;
+        const items = this.$refs.items;
         const shift = this.getCarouselShift(list);
         this.changeCarouselShift(list, shift);
+        list.style.transition = 'left 0.25s';
         setTimeout(() => {
           list.insertBefore(list.firstChild, null);
           list.style.transition = 'none';
           this.changeCarouselShift(list, 0);
         }, 250);
-        list.style.transition = 'left 0.25s';
 
       },
       onScrollPrev(list, items) {
         const shift = this.getCarouselShift(list);
         this.changeCarouselShift(list, shift*-1);
+        list.style.transition = 'left 0.25s';
         setTimeout(() => {
           list.insertBefore(list.lastChild, list.firstChild);
           list.style.transition = 'none';
           this.changeCarouselShift(list, 0);
         }, 250);
-        list.style.transition = 'left 0.25s';
 
       },
       prepareCarousel(list, items) {
