@@ -1,12 +1,16 @@
 import * as firebase from 'firebase'
 
 export const state = () => ({
-  products: []
+  products: [],
+  query: ''
 })
 
 export const mutations = {
   setProducts(state, payload) {
     state.products = payload
+  },
+  setQuery(state, payload) {
+    state.query = payload;
   }
 }
 
@@ -19,19 +23,6 @@ export const actions = {
 }
 
 export const getters = {
-  products: state => state.products
+  products: state => state.products,
+  query: state => state.query,
 }
-
-/* import Vuex from 'vuex'
-import products from './products'
-
-const store = () => {
-  return new Vuex.Store({
-    modules: {
-      products
-    }
-  })
-}
-
-export default store;
- */

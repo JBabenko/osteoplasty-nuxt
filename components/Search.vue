@@ -4,8 +4,10 @@
       @focus="focused = true"
       @blur="focused = false"
       class="search__input"
-      type="text"
-      placeholder="Search...">
+      type="search"
+      placeholder="Search..."
+      v-model="searchQuery"
+    >
     <font-awesome-icon class="icon" icon="search" />
     <font-awesome-icon class="icon icon-filter" icon="sliders-h" />
   </div>
@@ -16,8 +18,15 @@
     data () {
       return {
         focused: false,
+        searchQuery: ''
       }
     },
+    watch: {
+      searchQuery() {
+        this.$store.commit('products/setQuery', this.searchQuery);
+
+      }
+    }
   }
 
 </script>

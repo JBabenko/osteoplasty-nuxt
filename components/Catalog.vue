@@ -14,23 +14,13 @@
   export default {
     data() {
       return {
-        isScrollOnStart: true,
-        isScrollOnEnd: true,
+
       }
-    },
-    methods: {
-      /* onScroll(event) {
-        const scrollLeft = event.target.scrollLeft;
-        const maxScroll = event.target.scrollWidth - document.body.clientWidth;
-        this.isScrollOnStart = scrollLeft <= 20 ? true : false;
-        this.isScrollOnEnd = scrollLeft >= (maxScroll - 20) ? true : false;
-      } */
     },
     computed: {
       products() {
-        return this.$store.getters['products/products']
+        return this.$store.getters['products/products'];
       },
-
     },
     components: {
       AppCatalogList,
@@ -41,7 +31,9 @@
 
 <style lang="scss" scoped>
   @import '@/assets/styles/main.scss';
-
+  .hidden {
+    display: none;
+  }
   .catalog {
     &__title {
       padding: 0 20px;
