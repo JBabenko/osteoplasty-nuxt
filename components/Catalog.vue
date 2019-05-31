@@ -1,5 +1,5 @@
 <template>
-  <main class="catalog">
+  <main class="catalog" :class="{'catalog_onback': isFiltersOpen}">
     <div class="catalog__section" v-for="brand in products" :key="brand.id">
       <h2 class="catalog__title">{{ brand.brand }}</h2>
       <div class="catalog__list-wrap">
@@ -21,6 +21,9 @@
       products() {
         return this.$store.getters['products/products'];
       },
+      isFiltersOpen() {
+        return this.$store.getters['filters/isFiltersOpen']
+      }
     },
     components: {
       AppCatalogList,
@@ -31,10 +34,10 @@
 
 <style lang="scss" scoped>
   @import '@/assets/styles/main.scss';
-  .hidden {
-    display: none;
-  }
+
   .catalog {
+    transition: opacity 0.6s;
+
     &__title {
       padding: 0 20px;
     }
@@ -43,7 +46,9 @@
       position: relative;
     }
 
-
+    &_onback {
+      opacity: 0.2;
+    }
   }
 
 </style>

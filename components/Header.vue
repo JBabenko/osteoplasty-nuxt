@@ -48,7 +48,7 @@
       background: #fff;
       padding: 0 $field-s;
       transition: transform 0.7s cubic-bezier(0.13, 0.77, 0.49, 1);
-      margin: 5px 0;
+      z-index: 5;
       &.active {
         transform: translateX(calc(100% - 60px));
       }

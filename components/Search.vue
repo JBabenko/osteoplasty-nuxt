@@ -9,11 +9,15 @@
       v-model="searchQuery"
     >
     <font-awesome-icon class="icon" icon="search" />
-    <font-awesome-icon class="icon icon-filter" icon="sliders-h" />
+    <font-awesome-icon class="icon icon-filter" icon="sliders-h" @click="toggleFilters()" />
+
+    <app-filters></app-filters>
   </div>
 </template>
 
 <script>
+  import AppFilters from './Filters.vue'
+
   export default {
     data () {
       return {
@@ -24,8 +28,16 @@
     watch: {
       searchQuery() {
         this.$store.commit('products/setQuery', this.searchQuery);
-
       }
+    },
+    methods: {
+      toggleFilters() {
+        this.$store.commit('filters/filtersToggle', !this.$store.getters['filters/isFiltersOpen']);
+        document.body.classList.toggle('overflow-hidden');
+      }
+    },
+    components: {
+      AppFilters
     }
   }
 
@@ -33,7 +45,9 @@
 
 <style lang="scss" scoped>
   @import '@/assets/styles/main.scss';
+
   .search {
+    position: relative;
     width: 100%;
     display: flex;
     align-items: center;

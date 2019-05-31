@@ -21,6 +21,11 @@ import AppCatalog from '@/components/Catalog.vue'
   }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
+  .hidden {
+    display: none;
+  }
+  .overflow-hidden {
+    overflow: hidden;
+  }
 </style>
