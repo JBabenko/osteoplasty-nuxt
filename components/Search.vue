@@ -27,7 +27,7 @@
     },
     watch: {
       searchQuery() {
-        this.$store.commit('products/setQuery', this.searchQuery);
+        this.$store.commit('filters/setSearchQuery', this.searchQuery);
       }
     },
     methods: {
@@ -52,6 +52,7 @@
     display: flex;
     align-items: center;
     border-bottom: 1px solid #b8b8b8;
+    z-index: 5;
     transition: box-shadow 0.3s;
     &.focused {
       box-shadow: 0 0px 4px 1px #7ae2dd;

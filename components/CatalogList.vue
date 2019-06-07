@@ -51,7 +51,7 @@
 
             }
           }
-        }
+        },
       }
     },
     components: {
@@ -59,9 +59,38 @@
     },
     computed: {
       items() {
-        return this.brand.items.filter(item => {
-          return item.name.toLowerCase().includes(this.$store.getters['products/query'].toLowerCase());
+        let filteredItems = this.brand.items;
+        for (let filter in this.filters) {
+          if (this.filters[filter].length) {
+            if (filter === 'brands') {
+              filteredItems = filteredItems.filter(item => {
+                return this.filters[filter].indexOf(this.brand.brand) != -1;
+              });
+            }
+            if (filter === 'types') {
+              filteredItems = filteredItems.filter(item => {
+                return this.filters[filter].indexOf(item.type) != -1;
+              });
+            }
+          }
+        }
+        filteredItems = filteredItems.filter(item => {
+          const isFound = item.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                    this.brand.brand.toLowerCase().includes(this.searchQuery.toLowerCase());
+          return isFound;
         });
+        return filteredItems;
+      },
+      filters() {
+        return this.$store.getters['filters/filters'];
+      },
+      searchQuery() {
+        return this.$store.getters['filters/searchQuery'];
+      }
+    },
+    methods: {
+      filterItems(param) {
+
       }
     },
     watch: {
@@ -110,29 +139,26 @@
       &-right {
         right: 0px;
       }
-
-      &-icon {
-
-      }
     }
   }
   .swiper-pagination {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 2px 24px;
+    padding: 5px 24px;
     box-sizing: border-box;
 
     &-bullet {
       display: block;
       flex-grow: 1;
-      height: 2px;
+      height: 8px;
       margin: 0 2px;
-      background: $light-grey;
+      border-radius: 4px;
+      background: $primary-light;
       outline: none;
 
       &-active {
-        background: $black;
+        background: $primary;
       }
     }
   }

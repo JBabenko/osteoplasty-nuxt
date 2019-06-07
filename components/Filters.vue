@@ -9,16 +9,27 @@
       <div class="filters__section">
         <h3>Тип</h3>
         <div>
-          <input type="checkbox" id="bone">
+          <input v-model="checkedTypes" value="bone" type="checkbox" id="bone">
           <label for="bone">Кость</label>
         </div>
         <div>
-          <input type="checkbox" id="membrane">
+          <input v-model="checkedTypes" value="membrane" type="checkbox" id="membrane">
           <label for="membrane">Мембрана</label>
         </div>
         <div>
-          <input type="checkbox" id="block">
+          <input v-model="checkedTypes" value="block" type="checkbox" id="block">
           <label for="block">Блок</label>
+        </div>
+      </div>
+      <div class="filters__section">
+        <h3>Бренд</h3>
+        <div>
+          <input v-model="checkedBrands" value="Botiss" type="checkbox" id="botiss">
+          <label for="botiss">Botiss</label>
+        </div>
+        <div>
+          <input v-model="checkedBrands" value="Geistlich" type="checkbox" id="geistlich">
+          <label for="geistlich">Geistlich</label>
         </div>
       </div>
     </div>
@@ -36,11 +47,27 @@
       toggleFilters() {
         this.$store.commit('filters/filtersToggle', !this.$store.getters['filters/isFiltersOpen']);
         document.body.classList.toggle('overflow-hidden');
-      }
+      },
     },
     computed: {
       isFiltersOpen() {
         return this.$store.getters['filters/isFiltersOpen']
+      },
+      checkedTypes: {
+        set(val) {
+          this.$store.commit('filters/setTypes', val);
+        },
+        get() {
+          return this.$store.getters['filters/filters'].types;
+        }
+      },
+      checkedBrands: {
+        set(val) {
+          this.$store.commit('filters/setBrands', val);
+        },
+        get() {
+          return this.$store.getters['filters/filters'].brands;
+        }
       }
     }
   }
@@ -52,10 +79,10 @@
     display: flex;
     position: absolute;
     right: 0;
-    top: 0;
-    height: 100vh;
+    top: -61px;
     width: 100vw;
-    z-index: 4;
+    min-height: 100%;
+    z-index: 5;
     transform: translateX(100%);
     transition: transform 0.6s cubic-bezier(0.13, 0.77, 0.49, 1);
 
@@ -70,14 +97,14 @@
     &__close {
       position: relative;
       background: transparent;
-      height: 100%;
+      height: 100vh;
       width: 60px;
       transform: translateX(100%);
       transition: transform 0.6s;
 
       &-icon-wrap {
         width: 100%;
-        height: 40px;
+        height: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -91,8 +118,18 @@
 
     &__main {
       background: #fff;
-      height: 100%;
+      height: 100vh;
       flex-grow: 1;
+      overflow: scroll;
+    }
+
+    &__subsection {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 1s;
+      &_active {
+        max-height: 1000px;
+      }
     }
   }
 </style>
