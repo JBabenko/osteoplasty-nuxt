@@ -2,11 +2,9 @@
   <form>
     <div class="form-group">
       <label for="brand">Бренд</label>
-      <input v-model="brand" type="text" class="form-control" id="brand">
-    </div>
-    <div class="form-group">
-      <label for="currency">Валюта</label>
-      <input v-model="currency" type="text" class="form-control" id="currency">
+      <select v-model="brand" class="form-control" id="brand">
+        <option v-for="brand in products" :key="brand.brand" :value="brand.brand">{{brand.brand}}</option>
+      </select>
     </div>
     <div class="form-group">
       <label for="name">Название</label>
@@ -14,11 +12,20 @@
     </div>
     <div class="form-group">
       <label for="type">Тип</label>
-      <input v-model="type" type="text" class="form-control" id="type">
+      <select v-model="type" class="form-control" id="type">
+        <option value="bone">Кость</option>
+        <option value="membrane">Мембрана</option>
+        <option value="block">Блок</option>
+      </select>
     </div>
     <div class="form-group">
       <label for="unit">Единицы измерения</label>
       <input v-model="unit" type="text" class="form-control" id="unit">
+    </div>
+    <div class="container">
+      <div class="row">
+        <add-product-params @params="setParams"></add-product-params>
+      </div>
     </div>
     <div class="form-group">
       <label for="img">Изображение</label>
@@ -31,6 +38,7 @@
 
 <script>
   import * as firebase from 'firebase'
+  import AddProductParams from '@/components/admin/AddProductParams'
   export default {
     props: ['products', 'refProducts'],
     data() {
@@ -41,9 +49,16 @@
         type: '',
         unit: '',
         img: '',
+        params: []
       }
     },
+    components: {
+      AddProductParams
+    },
     methods: {
+      setParams(params) {
+        this.params = params;
+      },
       addProduct() {
         let brandKey = null;
         const brand = this.brand
@@ -62,13 +77,7 @@
             previewImage: this.img,
             type: this.type,
             unit: this.unit,
-            params: [
-              {
-                price: '11',
-                volume: '0.5',
-                sizes: ['0.25 - 1.0', '1.0 - 2.0']
-              }
-            ]
+            params: this.params
           });
         } else {
           alert('Нет такого бренда');

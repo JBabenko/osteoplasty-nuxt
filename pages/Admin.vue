@@ -48,7 +48,7 @@
     computed: {
       refProducts() {
         return firebase.database().ref().child('products');
-      }
+      },
     },
     components: {
       AddProduct
