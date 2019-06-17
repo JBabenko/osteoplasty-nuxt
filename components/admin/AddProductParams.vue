@@ -1,5 +1,5 @@
 <template>
-  <div class="col-4 params-group">
+  <div class="params">
     <div class="form-group">
       <label for="volume">Объем/размер</label>
       <input v-model="volume" type="text" class="form-control" id="volume">
@@ -56,8 +56,28 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@/assets/styles/bootstrap-css/bootstrap.min.css';
+@import '@/assets/styles/main.scss';
+/*   @import '@/assets/styles/bootstrap-css/bootstrap.min.css';
   @import '@/assets/styles/bootstrap-css/bootstrap-grid.min.css';
-  @import '@/assets/styles/bootstrap-css/bootstrap-reboot.min.css';
+  @import '@/assets/styles/bootstrap-css/bootstrap-reboot.min.css'; */
+
+  .params {
+    display: flex;
+    justify-content: space-between;
+  }
+  .form-group {
+    margin-bottom: 15px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  select, input {
+    border: 1px solid $black;
+    padding: 8px 12px;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
 </style>

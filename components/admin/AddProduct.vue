@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <div class="wrapper">
     <div class="form-group">
       <label for="brand">Бренд</label>
       <select v-model="brand" class="form-control" id="brand">
@@ -22,23 +22,22 @@
       <label for="unit">Единицы измерения</label>
       <input v-model="unit" type="text" class="form-control" id="unit">
     </div>
-    <div class="container">
-      <div class="row">
-        <add-product-params @params="setParams"></add-product-params>
-      </div>
-    </div>
     <div class="form-group">
       <label for="img">Изображение</label>
       <input v-model="img" type="text" class="form-control" id="img">
     </div>
+    <add-product-params @params="setParams"></add-product-params>
+
+    <app-item-params :item="item" :brand="brand.brand" :currency="brand.currency"></app-item-params>
     <div @click="addProduct()">Добавить</div>
-  </form>
+  </div>
 
 </template>
 
 <script>
   import * as firebase from 'firebase'
   import AddProductParams from '@/components/admin/AddProductParams'
+  import AppItemParams from '@/components/ItemParams'
   export default {
     props: ['products', 'refProducts'],
     data() {
@@ -53,7 +52,8 @@
       }
     },
     components: {
-      AddProductParams
+      AddProductParams,
+      AppItemParams
     },
     methods: {
       setParams(params) {
@@ -83,14 +83,42 @@
           alert('Нет такого бренда');
         }
       }
+    },
+    computed: {
+      item() {
+        return {
+          name: this.name.length ? this.name : '{Имя не задано}',
+          type: this.type.length ? this.type : 'bone',
+          unit: this.unit.length ? this.unit : '{Единицы не заданы}',
+          previewImage: this.img.length ? this.img : 'botiss/cerabone.jpg',
+          params: this.params.length ? this.params : [{price: '{Цена не задана}', volume: '{Объем не задан}'}]
+        }
+      }
     }
   }
 
 </script>
 
 <style lang="scss" scoped>
-  @import '@/assets/styles/bootstrap-css/bootstrap.min.css';
+@import '@/assets/styles/main.scss';
+/*   @import '@/assets/styles/bootstrap-css/bootstrap.min.css';
   @import '@/assets/styles/bootstrap-css/bootstrap-grid.min.css';
-  @import '@/assets/styles/bootstrap-css/bootstrap-reboot.min.css';
+  @import '@/assets/styles/bootstrap-css/bootstrap-reboot.min.css'; */
+
+  .wrapper {}
+  .form-group {
+    margin-bottom: 15px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  select, input {
+    border: 1px solid $black;
+    padding: 8px 12px;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
 </style>
