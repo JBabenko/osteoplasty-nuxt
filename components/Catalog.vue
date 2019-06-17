@@ -28,6 +28,9 @@
     components: {
       AppCatalogList,
     },
+    mounted() {
+      console.log(this.products);
+    }
   }
 
 </script>

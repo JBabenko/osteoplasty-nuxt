@@ -17,7 +17,7 @@
 
 <script>
   import AppFilters from './Filters.vue'
-
+  import * as firebase from 'firebase'
   export default {
     data () {
       return {
@@ -31,6 +31,38 @@
       }
     },
     methods: {
+      addBrand() {
+        firebase.database().ref("products").push({
+          "brand": "Osteobiol",
+          "currency": "eur"
+        });
+      },
+      addProduct() {
+        firebase.database().ref("products/-Lh5kZzgwCKCRjqZHQcB").child("items").push().set({
+          "name": "Apatos",
+          "type": "bone",
+          "unit": "g",
+          "previewImage": "botiss/cerabone.jpg",
+          "images": [],
+          "params": [
+            {
+              "volume": "0.5",
+              "sizes": ["0.25 - 1.0", "1.0 - 2.0"],
+              "price": "46"
+            },
+            {
+              "volume": "1.0",
+              "sizes": ["1.0 - 2.0"],
+              "price": "92"
+            },
+            {
+              "volume": "2.0",
+              "sizes": ["0.25 - 1.0", "2.0 - 4.0"],
+              "price": "165"
+            }
+          ]
+        });
+      },
       toggleFilters() {
         this.$store.commit('filters/filtersToggle', !this.$store.getters['filters/isFiltersOpen']);
         document.body.classList.toggle('overflow-hidden');

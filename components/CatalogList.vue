@@ -28,6 +28,7 @@
 
 <script>
   import AppItemParams from './ItemParams.vue'
+
   export default {
     props: ['brand'],
     data() {
@@ -57,29 +58,40 @@
     components: {
       AppItemParams,
     },
+    methods: {
+
+
+    },
     computed: {
       items() {
-        let filteredItems = this.brand.items;
-        for (let filter in this.filters) {
-          if (this.filters[filter].length) {
-            if (filter === 'brands') {
-              filteredItems = filteredItems.filter(item => {
-                return this.filters[filter].indexOf(this.brand.brand) != -1;
-              });
-            }
-            if (filter === 'types') {
-              filteredItems = filteredItems.filter(item => {
-                return this.filters[filter].indexOf(item.type) != -1;
-              });
+        Object.filter = (obj, predicate) =>
+          Object.keys(obj)
+                .filter( key => predicate(obj[key]) )
+                .reduce( (res, key) => (res[key] = obj[key], res), {} );
+
+        if (this.brand.items) {
+          let filteredItems = this.brand.items;
+          for (let filter in this.filters) {
+            if (this.filters[filter].length) {
+              if (filter === 'brands') {
+                filteredItems = Object.filter(filteredItems, item => {
+                  return this.filters[filter].indexOf(this.brand.brand) != -1;
+                });
+              }
+              if (filter === 'types') {
+                filteredItems = Object.filter(filteredItems, item => {
+                  return this.filters[filter].indexOf(item.type) != -1;
+                });
+              }
             }
           }
+          filteredItems = Object.filter(filteredItems, item => {
+            const isFound = item.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                            this.brand.brand.toLowerCase().includes(this.searchQuery.toLowerCase());
+            return isFound;
+          });
+          return filteredItems;
         }
-        filteredItems = filteredItems.filter(item => {
-          const isFound = item.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                    this.brand.brand.toLowerCase().includes(this.searchQuery.toLowerCase());
-          return isFound;
-        });
-        return filteredItems;
       },
       filters() {
         return this.$store.getters['filters/filters'];
@@ -88,14 +100,9 @@
         return this.$store.getters['filters/searchQuery'];
       }
     },
-    methods: {
-      filterItems(param) {
-
-      }
-    },
     watch: {
       items() {
-        if (this.items.length < 1) {
+        if (Object.keys(this.items).length < 1) {
           this.$refs.list.parentNode.parentNode.classList.add('hidden');
         } else {
           this.$refs.list.parentNode.parentNode.classList.remove('hidden');
