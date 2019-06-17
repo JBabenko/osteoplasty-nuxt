@@ -16,7 +16,6 @@
           <select class="item__param_bold" v-model="selectedVolume" @change="onChangeSelectVolume">
             <option
               v-for="(params, index) in item.params"
-              :value="params.volume"
               :key="index"
             >
               {{ params.volume }}
@@ -34,7 +33,6 @@
           <select v-model="selectedSize" class="item__param_bold">
             <option
               v-for="(size, index) in itemSizes"
-              :value="size"
               :key="index"
             >
               {{ size }}
@@ -90,7 +88,13 @@
     },
     methods: {
       getImgUrl(img) {
-        return require('../assets/images/' + img)
+        try {
+          return require('../assets/images/' + img);
+        }
+        catch {
+          return '';
+        }
+
       },
       onChangeSelectVolume() {
         if (this.itemSizes) {
@@ -118,12 +122,23 @@
           }
         });
         return sizes;
+      },
+      params() {
+        if (this.item.params.length) {
+          return this.item.params;
+        }
       }
     },
     watch: {
-      quantity: function(val) {
+      quantity(val) {
         if (val < 1) {
           this.quantity = 1;
+        }
+      },
+      params() {
+          console.log(this.params);
+        if (this.params.length != 0) {
+          this.selectedVolume = this.item.params[0].volume;
         }
       }
     },

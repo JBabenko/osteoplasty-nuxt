@@ -1,30 +1,32 @@
 <template>
-  <div class="wrapper">
-    <div class="form-group">
-      <label for="brand">Бренд</label>
-      <select v-model="brand" class="form-control" id="brand">
-        <option v-for="brand in products" :key="brand.brand" :value="brand.brand">{{brand.brand}}</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="name">Название</label>
-      <input v-model="name" type="text" class="form-control" id="name">
-    </div>
-    <div class="form-group">
-      <label for="type">Тип</label>
-      <select v-model="type" class="form-control" id="type">
-        <option value="bone">Кость</option>
-        <option value="membrane">Мембрана</option>
-        <option value="block">Блок</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="unit">Единицы измерения</label>
-      <input v-model="unit" type="text" class="form-control" id="unit">
-    </div>
-    <div class="form-group">
-      <label for="img">Изображение</label>
-      <input v-model="img" type="text" class="form-control" id="img">
+  <div>
+    <div class="wrapper">
+      <div class="form-group">
+        <label for="brand">Бренд</label>
+        <select v-model="brand" class="form-control" id="brand">
+          <option v-for="brand in products" :key="brand.brand" :value="brand.brand">{{brand.brand}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="name">Название</label>
+        <input v-model="name" type="text" class="form-control" id="name">
+      </div>
+      <div class="form-group">
+        <label for="type">Тип</label>
+        <select v-model="type" class="form-control" id="type">
+          <option value="bone">Кость</option>
+          <option value="membrane">Мембрана</option>
+          <option value="block">Блок</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="unit">Единицы измерения</label>
+        <input v-model="unit" type="text" class="form-control" id="unit">
+      </div>
+      <div class="form-group">
+        <label for="img">Изображение</label>
+        <input v-model="img" type="text" class="form-control" id="img">
+      </div>
     </div>
     <add-product-params @params="setParams"></add-product-params>
 
@@ -105,9 +107,16 @@
   @import '@/assets/styles/bootstrap-css/bootstrap-grid.min.css';
   @import '@/assets/styles/bootstrap-css/bootstrap-reboot.min.css'; */
 
-  .wrapper {}
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
   .form-group {
     margin-bottom: 15px;
+    margin-right: 10px;
+    width: 30%;
+    flex-grow: 1;
   }
   label {
     display: block;

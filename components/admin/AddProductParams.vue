@@ -9,7 +9,7 @@
       <input v-model="price" type="text" class="form-control" id="price">
     </div>
     <div class="form-group">
-      <label for="size">Размеры</label>
+      <label for="size">Опции</label>
       <input v-model="size" type="text" class="form-control" id="size">
       <div @click="addSize()">Добавить размер</div>
     </div>
