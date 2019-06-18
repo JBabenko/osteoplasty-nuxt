@@ -1,24 +1,20 @@
 <template>
-  <div>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-3">
-          <ul>
-            <li v-for="brand in products" :key="brand.id">
-              {{brand.brand}}
-              <ul class="items-list" v-if="Object.keys(brand.items).length != 0">
-                <li v-for="item in brand.items" :key="item.id">
-                  {{item.name}}
-                </li>
-              </ul>
+  <div class="admin">
+    <div class="admin-left">
+      <ul>
+        <li v-for="brand in products" :key="brand.id">
+          {{brand.brand}}
+          <ul class="items-list" v-if="Object.keys(brand.items).length != 0">
+            <li v-for="item in brand.items" :key="item.id">
+              {{item.name}}
             </li>
           </ul>
+        </li>
+      </ul>
 
-        </div>
-        <div class="col-9">
-          <add-product :products="products" :refProducts="refProducts"></add-product>
-        </div>
-      </div>
+    </div>
+    <div class="admin-right">
+      <add-product :products="products" :refProducts="refProducts"></add-product>
     </div>
   </div>
 </template>
@@ -58,9 +54,25 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@/assets/styles/bootstrap-css/bootstrap.min.css';
+@import '@/assets/styles/main.scss';
+  /*  @import '@/assets/styles/bootstrap-css/bootstrap.min.css';
   @import '@/assets/styles/bootstrap-css/bootstrap-grid.min.css';
-  @import '@/assets/styles/bootstrap-css/bootstrap-reboot.min.css';
+  @import '@/assets/styles/bootstrap-css/bootstrap-reboot.min.css'; */
+
+  .admin {
+    padding: 0 20px;
+    display: flex;
+
+    &-left {
+      padding: 20px 15px 20px 0;
+      border-right: 1px solid $black
+    }
+
+    &-right {
+      padding: 20px 0 20px 15px;
+      flex-grow: 1;
+    }
+  }
 
   .items-list {
     margin-left: 20px;

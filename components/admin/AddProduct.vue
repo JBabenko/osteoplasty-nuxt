@@ -31,7 +31,7 @@
     <add-product-params @params="setParams"></add-product-params>
 
     <app-item-params :item="item" :brand="brand.brand" :currency="brand.currency"></app-item-params>
-    <div @click="addProduct()">Добавить</div>
+    <button class="add-button" @click="addProduct()">Добавить товар</button>
   </div>
 
 </template>
@@ -92,7 +92,7 @@
           name: this.name.length ? this.name : '{Имя не задано}',
           type: this.type.length ? this.type : 'bone',
           unit: this.unit.length ? this.unit : '{Единицы не заданы}',
-          previewImage: this.img.length ? this.img : 'botiss/cerabone.jpg',
+          previewImage: this.img.length ? this.img : 'no-photo.png',
           params: this.params.length ? this.params : [{price: '{Цена не задана}', volume: '{Объем не задан}'}]
         }
       }
@@ -128,6 +128,16 @@
     border-radius: 10px;
     width: 100%;
     box-sizing: border-box;
+  }
+  .add-button {
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+    background: $primary;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
   }
 
 </style>

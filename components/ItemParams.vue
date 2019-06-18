@@ -92,7 +92,7 @@
           return require('../assets/images/' + img);
         }
         catch {
-          return '';
+          return require('../assets/images/no-photo.png');
         }
 
       },
@@ -136,7 +136,6 @@
         }
       },
       params() {
-          console.log(this.params);
         if (this.params.length != 0) {
           this.selectedVolume = this.item.params[0].volume;
         }
