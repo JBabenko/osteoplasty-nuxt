@@ -1,16 +1,8 @@
 <template>
   <div class="admin">
     <div class="admin-left">
-      <ul>
-        <li v-for="brand in products" :key="brand.id">
-          {{brand.brand}}
-          <ul class="items-list" v-if="Object.keys(brand.items).length != 0">
-            <li v-for="item in brand.items" :key="item.id">
-              {{item.name}}
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <production-list :products="products" :refProducts="refProducts"></production-list>
+
 
     </div>
     <div class="admin-right">
@@ -22,14 +14,8 @@
 <script>
   import * as firebase from 'firebase'
   import AddProduct from '@/components/admin/AddProduct'
+  import ProductionList from '@/components/admin/ProductionList'
   export default {
-    /* async fetch({
-      store
-    }) {
-      if (store.getters['products/products'].length === 0) {
-        await store.dispatch('products/fetch');
-      }
-    }, */
     data() {
       return {
         products: []
@@ -47,7 +33,8 @@
       },
     },
     components: {
-      AddProduct
+      AddProduct,
+      ProductionList
     }
   }
 
@@ -72,10 +59,6 @@
       padding: 20px 0 20px 15px;
       flex-grow: 1;
     }
-  }
-
-  .items-list {
-    margin-left: 20px;
   }
 
 </style>
