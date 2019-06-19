@@ -74,13 +74,9 @@
           });
         });
         if (brandKey) {
-          this.refProducts.child(brandKey).child('items').push({
-            name: this.name,
-            previewImage: this.img,
-            type: this.type,
-            unit: this.unit,
-            params: this.params
-          });
+          const newProductKey = this.refProducts.child(brandKey).child('items').push().key;
+          this.item.id = newProductKey;
+          this.refProducts.child(brandKey).child('items').child(newProductKey).update(this.item);
         } else {
           alert('Нет такого бренда');
         }

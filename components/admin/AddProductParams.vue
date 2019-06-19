@@ -161,7 +161,7 @@
     flex-wrap: wrap;
     &-item {
       position: relative;
-      padding: 3px;
+      padding: 3px 5px;
       font-size: 12px;
       border: 1px solid $black;
       border-radius: 10px;

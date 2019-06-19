@@ -1,16 +1,24 @@
 <template>
   <ul>
-    <li v-for="brand in products" :key="brand.id" :data-key="getBrandKey(brand)">
+    <li v-for="brand in products" :key="brand.id">
       {{brand.brand}}
-      <ul class="items-list" v-if="Object.keys(brand.items).length != 0">
-        <li v-for="item in brand.items" :key="item.id" :data-key="getItemKey(item)">
-          {{item.name}}
+      <ul class="items-list" v-if="brand.items">
+        <nuxt-link v-for="item in brand.items"
+                  :key="item.name"
+                  tag="li"
+                  :to="{
+                    name: 'admin-item',
+                    params: {item: item.id}
+                  }"
+                  exact
+                  active-class="active">
+          <a class="">{{item.name}}</a>
           <font-awesome-icon
             class=""
             icon="times-circle"
-            @click="removeProduct(item)"
+            @click="removeProduct(item, brand)"
           />
-        </li>
+        </nuxt-link>
       </ul>
     </li>
   </ul>
@@ -20,6 +28,9 @@
   import * as firebase from 'firebase'
   export default {
     props: ['products', 'refProducts'],
+    mounted() {
+      console.log(this.$store.getters['products/products']);
+    },
     methods: {
       getBrandKey(brand) {
         let key = null;
@@ -46,27 +57,16 @@
             }
           });
         });
-        console.log(key);
         return key;
       },
-      removeProduct(item) {
-        console.log(item);
-        /* let brandKey = null;
-        const brand = this.brand
-        this.refProducts.once('value', function(snapshot) {
-          snapshot.forEach(function(childSnapshot) {
-            const childKey = childSnapshot.key;
-            const childData = childSnapshot.val();
-            if (childData.brand === brand) {
-              brandKey = childKey;
-            }
-          });
-        }); */
+      removeProduct(item, brand) {
+        if (confirm('Точно удалить ' + item.name + '?')) {
+          const itemKey = this.getItemKey(item);
+          const brandKey = this.getBrandKey(brand);
+          this.refProducts.child(brandKey).child('items/' + itemKey).remove();
+        }
       }
     },
-    computed: {
-
-    }
   }
 
 </script>

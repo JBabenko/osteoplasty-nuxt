@@ -1,9 +1,8 @@
 <template>
+
   <div class="admin">
     <div class="admin-left">
       <production-list :products="products" :refProducts="refProducts"></production-list>
-
-
     </div>
     <div class="admin-right">
       <add-product :products="products" :refProducts="refProducts"></add-product>
@@ -16,6 +15,11 @@
   import AddProduct from '@/components/admin/AddProduct'
   import ProductionList from '@/components/admin/ProductionList'
   export default {
+    async fetch({store}) {
+      if (store.getters['products/products'].length === 0) {
+        await store.dispatch('products/fetch');
+      }
+    },
     data() {
       return {
         products: []
